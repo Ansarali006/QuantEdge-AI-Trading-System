@@ -22,7 +22,7 @@ load_dotenv(dotenv_path=Path(__file__).resolve().parents[2] / ".env")
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from quant.api.routes import overview, stocks, backtests, data_quality, assistant
+from quant.api.routes import overview, stocks, backtests, data_quality, assistant, forecasts
 
 app = FastAPI(
     title="QuantEdge Research API",
@@ -54,6 +54,8 @@ app.include_router(stocks.router,   prefix="/api")
 app.include_router(backtests.router, prefix="/api")
 app.include_router(data_quality.router, prefix="/api")
 app.include_router(assistant.router, prefix="/api")
+app.include_router(forecasts.router,prefix="/api",
+)
 
 
 @app.get("/api/health")

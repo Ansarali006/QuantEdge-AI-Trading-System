@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { api } from '../../services/api';
 import { PriceChart } from '../../components/charts/PriceChart';
 import { VolumeChart } from '../../components/charts/VolumeChart';
+import { KronosForecastChart } from '../../components/charts/KronosForecastChart';
 import { StockSelector } from '../../components/ui/StockSelector';
 import type { FeatureRow } from '../../types';
 
@@ -187,6 +188,8 @@ export function StockAnalysis() {
           </div>
         </div>
       </div>
+       {/* New Kronos forecasting section */}
+      <KronosForecastChart symbol={symbol} />
     </div>
   );
 }

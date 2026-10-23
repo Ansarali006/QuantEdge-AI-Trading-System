@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuantEdge AI Trading System - Strategic US Momentum Cockpit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/app.css">
+    <script src="/static/lightweight-charts.standalone.production.js"></script>
+</head>
+<body>
+    <!-- 1. Left Vertical Navigation Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="sidebar-logo-box">
+                <div class="sidebar-logo-icon">Q</div>
+                <div class="sidebar-logo-text">
+                    QuantEdge
+                    <span>AI COCKPIT</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-tab active" data-tab="workspace">
+                    <span class="nav-icon">📊</span>
+                    <span>Trading Cockpit</span>
+                </div>
+                <div class="nav-tab" data-tab="scanner">
+                    <span class="nav-icon">🎯</span>
+                    <span>5-Pillar Scanner</span>
+                </div>
+                <div class="nav-tab" data-tab="risk">
+                    <span class="nav-icon">🛡️</span>
+                    <span>Discipline & Risk</span>
+                </div>
+                <div class="nav-tab" data-tab="journal">
+                    <span class="nav-icon">📈</span>
+                    <span>Trade Journal & Analytics</span>
+                </div>
+                <div class="nav-tab" data-tab="backtest">
+                    <span class="nav-icon">🧪</span>
+                    <span>Backtesting Lab</span>
+                </div>
+                <div class="nav-tab" data-tab="compliance">
+                    <span class="nav-icon">⚖️</span>
+                    <span>Compliance & 2026 FINRA</span>
+                </div>
+            </nav>
+        </div>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-bottom-link" onclick="openModal('settings')">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </div>
+            <div class="sidebar-bottom-link" onclick="openModal('help')">
+                <span class="nav-icon">❓</span>
+                <span>Help</span>
+            </div>
+            <div class="sidebar-bottom-link" onclick="openModal('docs')">
+                <span class="nav-icon">📖</span>
+                <span>Documentation</span>
+            </div>
+
+            <div class="user-profile-pill">
+                <div class="user-profile-info">
+                    <div class="user-avatar">AK</div>
+                    <div class="user-name">Ashish Kumar</div>
+                </div>
+                <span style="color: #64748B; font-size: 11px;">›</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- 2. Main Content Layout Area -->
+    <main class="main-layout">
+        <!-- Top Header Card -->
+        <header class="top-header">
+            <div class="header-left">
+                <div class="header-brand-icon">Q</div>
+                <div class="header-title-box">
+                    <h1>QuantEdge <span>AI Cockpit</span></h1>
+                    <p>POWERED BY KRONOS FINANCIAL FOUNDATION MODEL</p>
+                </div>
+            </div>
+
+            <div class="header-badges-row">
+                <span class="badge-pill badge-pill-green" id="feedSourceBadge">
+                    <span style="width: 7px; height: 7px; background: #15803D; border-radius: 50%; display: inline-block;"></span>
+                    ALPACA LIVE
+                </span>
+                <span class="badge-pill badge-pill-cyan" id="latencyBadge">42MS</span>
+                <span class="badge-pill badge-pill-amber" id="timeWindowBadge">⏱ WINDOW: 09:30 - 10:00 EST</span>
+                <span class="badge-pill badge-pill-teal" id="activeTierBadge">TIER 1 ($30 - $50)</span>
+
+                <div class="regime-dropdown-box">
+                    <span style="color: var(--text-muted); font-size: 10px; font-weight: 700;">REGIME:</span>
+                    <select id="regimeSelect" class="regime-select">
+                        <option value="Bullish" selected>📈 Bullish</option>
+                        <option value="Mixed">⚖️ Mixed</option>
+                        <option value="Bearish">📉 Bearish</option>
+                        <option value="Volatility Shock">⚡ Vol Shock</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <div class="theme-toggle-pill" id="themeToggleBtn" onclick="toggleTheme()" style="cursor: pointer;">
+                    <span class="theme-toggle-opt active" id="themeOptLight">☀️ Light</span>
+                    <span class="theme-toggle-opt" id="themeOptDark">🌙 Dark</span>
+                </div>
+                <button id="btnKillSwitch" class="btn-kill-switch" onclick="executeKillSwitch()">⚡ EMERGENCY KILL SWITCH</button>
+            </div>
+        </header>
+
+        <!-- Top 5 KPI Cards Row -->
+        <section class="kpi-row">
+            <!-- Card 1: Account Equity -->
+            <div class="kpi-card">
+                <div class="kpi-left-box">
+                    <div class="kpi-icon-bubble">💳</div>
+                    <div>
+                        <div class="kpi-title">ACCOUNT EQUITY</div>
+                        <div class="kpi-value value-blue" id="equityDisplay">$100,000.00</div>
+                        <div class="kpi-subtext">BP: <span id="bpDisplay">$400,000.00</span></div>
+                    </div>
+                </div>
+                <div class="kpi-sparkline">
+                    <svg width="55" height="26" viewBox="0 0 55 26" fill="none">
+                        <path d="M2 22 L15 17 L28 19 L40 9 L53 4" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Card 2: Today's Realized P&L -->
+            <div class="kpi-card">
+                <div class="kpi-left-box">
+                    <div class="kpi-icon-bubble">📊</div>
+                    <div>
+                        <div class="kpi-title">TODAY'S REALIZED P&L</div>
+                        <div class="kpi-value value-green" id="dailyPnlDisplay">+$0.00</div>
+                        <div class="kpi-subtext">Peak: <span id="peakPnlDisplay">+$0.00</span></div>
+                    </div>
+                </div>
+                <div class="kpi-sparkline">
+                    <svg width="45" height="24" viewBox="0 0 45 24" fill="none">
+                        <rect x="2" y="14" width="6" height="8" rx="2" fill="#34D399"/>
+                        <rect x="11" y="10" width="6" height="12" rx="2" fill="#34D399"/>
+                        <rect x="20" y="6" width="6" height="16" rx="2" fill="#10B981"/>
+                        <rect x="29" y="12" width="6" height="10" rx="2" fill="#34D399"/>
+                        <rect x="38" y="2" width="6" height="20" rx="2" fill="#059669"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Card 3: 50% Profit Giveback Meter -->
+            <div class="kpi-card">
+                <div class="kpi-left-box" style="width: 100%;">
+                    <div class="kpi-icon-bubble">🎯</div>
+                    <div style="flex: 1;">
+                        <div class="kpi-title">50% PROFIT GIVEBACK METER</div>
+                        <div class="kpi-value value-amber" id="givebackDisplay">0.0% / 50%</div>
+                        <div class="kpi-progress-bar">
+                            <div id="givebackFill" class="kpi-progress-fill" style="width: 0%; background: #F59E0B;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Daily Loss Limit -->
+            <div class="kpi-card">
+                <div class="kpi-left-box" style="width: 100%;">
+                    <div class="kpi-icon-bubble">🛡️</div>
+                    <div style="flex: 1;">
+                        <div class="kpi-title">DAILY LOSS LIMIT ($100)</div>
+                        <div class="kpi-value value-red" id="lossConsumedDisplay">0.0%</div>
+                        <div class="kpi-progress-bar">
+                            <div id="lossFill" class="kpi-progress-fill" style="width: 0%; background: #EF4444;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5: Execution Edge -->
+            <div class="kpi-card">
+                <div class="kpi-left-box">
+                    <div class="kpi-icon-bubble">📈</div>
+                    <div>
+                        <div class="kpi-title">EXECUTION EDGE (SECTION 12)</div>
+                        <div class="kpi-value value-green" id="cockpitEdge">2.42R</div>
+                        <div class="kpi-subtext">Target: >1.3 PF | >95% Adherence</div>
+                    </div>
+                </div>
+                <div class="kpi-sparkline">
+                    <span style="font-size: 18px; color: #10B981; font-weight: 800;">↗</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scanner Notice Banner -->
+        <div id="scannerNoticeBanner" class="notice-banner-amber">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 14px;">⚠️</span>
+                <span><strong>SCANNER NO-TRADE STATE (SECTION 7 RULE)</strong> No-Trade State: No A-Grade candidates met the strict 5-pillar criteria today. Stay patient.</span>
+            </div>
+            <button class="notice-close-btn" onclick="document.getElementById('scannerNoticeBanner').style.display='none'">✕</button>
+        </div>
+
+        <!-- Hard Lockout Alert Box -->
+        <div id="lockoutBanner" class="notice-banner-amber" style="display: none; background: #FEE2E2; border-color: #F87171; color: #991B1B;">
+            <div>
+                <strong>⛔ DISCIPLINE LOCKOUT ACTIVE:</strong>
+                <span id="lockoutReasonText">Trading halted for the remainder of the session.</span>
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             MODULE VIEW 1: TRADING COCKPIT (Default Workspace)
+             ========================================================================= -->
+        <div id="view-workspace" class="tab-view" style="display: flex; flex: 1; min-height: 0;">
+            <div class="cockpit-grid">
+                <!-- Column 1: A-Grade Scanner + Insights -->
+                <div class="cockpit-col">
+                    <!-- A-Grade Scanner Card -->
+                    <div class="ui-card" style="flex: 1; min-height: 380px;">
+                        <div class="ui-card-header">
+                            <div class="ui-card-title">
+                                <span style="color: #EF4444;">🎯</span>
+                                <span>A-GRADE SCANNER</span>
+                            </div>
+                            <button class="btn-select-sym" onclick="document.querySelector('.nav-tab[data-tab=\'scanner\']').click()">5 PILLARS</button>
+                        </div>
+
+                        <div class="scanner-filter-row">
+                            <div class="filter-pills">
+                                <span class="filter-pill active" onclick="filterScanner('active', this)">Active (6)</span>
+                                <span class="filter-pill" onclick="filterScanner('watchlist', this)">Watchlist (12)</span>
+                                <span class="filter-pill" onclick="filterScanner('all', this)">All (50)</span>
+                            </div>
+                            <span style="font-size: 12px; color: var(--text-muted); cursor: pointer;">🔍</span>
+                        </div>
+
+                        <div class="ui-card-body" style="padding: 0;">
+                            <table class="scanner-table-compact">
+                                <thead>
+                                    <tr>
+                                        <th>SYM</th>
+                                        <th>PRICE</th>
+                                        <th>GAP %</th>
+                                        <th>RVOL</th>
+                                        <th>FLOAT</th>
+                                        <th>GRADE</th>
+                                        <th style="text-align: right;">ACT</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="scannerTableBody">
+                                    <!-- Dynamically populated -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Scanner Insights Box -->
+                    <div class="scanner-insights-card">
+                        <div class="insights-content">
+                            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                <span>💡</span>
+                                <span style="font-size: 11px; font-weight: 700; color: #1877F2;">Scanner Insights</span>
+                                <a href="javascript:void(0)" onclick="document.querySelector('.nav-tab[data-tab=\'scanner\']').click()" style="font-size: 10px; color: var(--text-dim); margin-left: auto;">View All →</a>
+                            </div>
+                            <h4>No A-Grade Setups</h4>
+                            <p>Market conditions do not meet all 5-pillar criteria. Focus on preparation and risk control.</p>
+                        </div>
+                        <div class="insights-art">
+                            <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+                                <rect x="6" y="4" width="26" height="32" rx="4" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+                                <line x1="11" y1="12" x2="27" y2="12" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="11" y1="18" x2="23" y2="18" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
+                                <line x1="11" y1="24" x2="19" y2="24" stroke="#93C5FD" stroke-width="2" stroke-linecap="round"/>
+                                <circle cx="28" cy="28" r="7" fill="#FFFFFF" stroke="#1877F2" stroke-width="2"/>
+                                <line x1="33" y1="33" x2="38" y2="38" stroke="#1877F2" stroke-width="2.5" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 2: TradingView Candlestick Chart Area -->
+                <div class="cockpit-col" style="flex: 1;">
+                    <div class="chart-widget-card">
+                        <!-- Chart Header Bar -->
+                        <div class="chart-header-bar">
+                            <div class="chart-symbol-info">
+                                <span style="font-size: 18px;">🟢</span>
+                                <span class="chart-sym-name" id="chartHeaderSymbol">NVDA</span>
+                                <span class="chart-sym-price" id="chartHeaderPrice">$216.51</span>
+                                <span class="chart-sym-change value-red" id="chartHeaderChange">-0.58 (-0.26%)</span>
+                            </div>
+
+                            <div class="chart-timeframe-row">
+                                <button class="tf-btn active" onclick="switchTimeframe('1m', this)">1m</button>
+                                <button class="tf-btn" onclick="switchTimeframe('5m', this)">5m</button>
+                                <button class="tf-btn" onclick="switchTimeframe('15m', this)">15m</button>
+                                <button class="tf-btn" onclick="switchTimeframe('1H', this)">1H</button>
+                                <button class="tf-btn" onclick="switchTimeframe('D', this)">D</button>
+                            </div>
+
+                            <div style="display: flex; gap: 6px;">
+                                <button class="chart-tool-btn" onclick="toggleIndicatorsModal()">📉 Indicators</button>
+                                <button class="chart-tool-btn" onclick="alert('Drawing tools enabled')">✏️ Draw</button>
+                                <button class="chart-tool-btn" onclick="openModal('settings')">⚙️</button>
+                                <button class="chart-tool-btn" onclick="toggleFullScreenChart()">⛶</button>
+                            </div>
+                        </div>
+
+                        <!-- OHLCV Sub-Bar -->
+                        <div class="chart-sub-bar" id="chartOhlcvBar">
+                            <div>
+                                <span style="color: var(--text-dim);">O</span> <strong id="barO">216.50</strong>
+                                <span style="color: var(--text-dim); margin-left: 6px;">H</span> <strong id="barH">218.45</strong>
+                                <span style="color: var(--text-dim); margin-left: 6px;">L</span> <strong id="barL">212.78</strong>
+                                <span style="color: var(--text-dim); margin-left: 6px;">C</span> <strong id="barC">216.51</strong>
+                                <span style="color: var(--text-dim); margin-left: 6px;">Vol</span> <strong id="barVol">1.28M</strong>
+                                <span class="value-red" style="margin-left: 6px;" id="barDelta">-0.58 (-0.26%)</span>
+                            </div>
+                            <div style="display: flex; gap: 12px;">
+                                <span><span style="color: #F59E0B;">●</span> VWAP <strong id="legendVwap">216.28</strong></span>
+                                <span><span style="color: #1877F2;">●</span> EMA 9 <strong id="legendEma9">216.42</strong></span>
+                            </div>
+                        </div>
+
+                        <!-- Chart Canvas Container -->
+                        <div class="chart-canvas-wrapper" id="mainChartCanvas">
+                            <!-- Lightweight charts canvas renders here -->
+                        </div>
+
+                        <!-- Chart Footer Controls -->
+                        <div class="chart-footer-controls">
+                            <div class="overlay-checkbox-group">
+                                <label class="overlay-label"><input type="checkbox" class="overlay-toggle" data-overlay="vwap" checked> VWAP (RTH)</label>
+                                <label class="overlay-label"><input type="checkbox" class="overlay-toggle" data-overlay="ema9" checked> EMA 9</label>
+                                <label class="overlay-label"><input type="checkbox" class="overlay-toggle" data-overlay="ema20"> EMA 20</label>
+                                <label class="overlay-label"><input type="checkbox" class="overlay-toggle" data-overlay="ema50"> EMA 50</label>
+                                <label class="overlay-label"><input type="checkbox" class="overlay-toggle" data-overlay="volume" checked> Volume</label>
+                                <label class="overlay-label"><input type="checkbox" class="overlay-toggle" data-overlay="signals" checked> Signals</label>
+                                <label class="overlay-label" style="color: #1877F2; font-weight: 700;"><input type="checkbox" class="overlay-toggle" data-overlay="kronosForecast" checked> 🤖 Kronos AI Forecast</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <span style="color: var(--text-muted); font-size: 11px;">🕒</span>
+                                <select class="regime-select" style="font-size: 11px;">
+                                    <option>RTH (09:30 - 16:00)</option>
+                                    <option>Extended (04:00 - 20:00)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Micro Signal & Kronos Forecast Bar -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                        <div class="ui-card" style="padding: 8px 12px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <span style="font-size: 11px; font-weight: 700; color: var(--text-title);">SIGNAL ENGINE</span>
+                                <span id="signalTypeBadge" class="badge-pill badge-pill-green">ENTRY</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted);" id="signalSummaryText">
+                                Planned R:R: <strong class="value-green" id="signalPlannedRr">2.17:1</strong> | Pullback: <strong class="value-green" id="signalPullbackDepth">28.6%</strong>
+                            </div>
+                        </div>
+
+                        <div class="ui-card" style="padding: 8px 12px;" id="kronosAiInsight">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <span style="font-size: 11px; font-weight: 700; color: #1877F2;">🤖 Kronos-Foundation</span>
+                                <span class="badge-pill badge-pill-green">BULLISH (64% UP)</span>
+                            </div>
+                            <div style="font-size: 11px; color: var(--text-muted);">
+                                Neural transformer forecast: Expected volatility ±$0.24. Aligned with crossing candle.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Column 3: Level 2 & Tape + Pre-Trade Risk Ticket -->
+                <div class="cockpit-col">
+                    <!-- Level 2 & Tape Widget -->
+                    <div class="ui-card" style="flex: 1; min-height: 280px;">
+                        <div class="ui-card-header">
+                            <div class="ui-card-title">
+                                <span style="color: #1877F2;">📊</span>
+                                <span>LEVEL 2 & TAPE</span>
+                            </div>
+                            <span style="font-size: 13px; color: var(--text-muted); cursor: pointer;" onclick="openModal('settings')">⚙️</span>
+                        </div>
+
+                        <div class="ui-card-body" style="padding: 8px 10px;">
+                            <div class="l2-tabs-row">
+                                <button class="l2-tab-btn active" id="btnTabBook" onclick="switchL2Tab('book')">Order Book</button>
+                                <button class="l2-tab-btn" id="btnTabTape" onclick="switchL2Tab('tape')">Time & Sales</button>
+                                <button class="l2-tab-btn" id="btnTabPrints" onclick="switchL2Tab('prints')">Recent Prints</button>
+                            </div>
+
+                            <div class="l2-meta-status">
+                                <span>Imbalance: <strong id="l2Imbalance" class="value-green">+15%</strong></span>
+                                <span>Speed: <strong id="tapeSpeedVal" class="value-blue">7.1 orders/s</strong></span>
+                            </div>
+
+                            <!-- Order Book Table Pane -->
+                            <div id="paneL2Book">
+                                <table class="l2-depth-table">
+                                    <thead>
+                                        <tr>
+                                            <th>BID SIZE</th>
+                                            <th>BID</th>
+                                            <th style="text-align: left;">ASK</th>
+                                            <th>ASK SIZE</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="l2BookBody">
+                                        <!-- Dynamically generated rows with depth bars -->
+                                    </tbody>
+                                </table>
+                                <div class="l2-spread-bar" id="l2SpreadText">Spread: $0.04</div>
+                            </div>
+
+                            <!-- Time & Sales Pane (Hidden by default) -->
+                            <div id="paneL2Tape" style="display: none;">
+                                <div class="tape-stream-box" id="tapeTicks">
+                                    <!-- Tape ticks streamed here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pre-Trade Risk Ticket Widget -->
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <div class="ui-card-title">
+                                <span style="color: #1877F2;">🛡️</span>
+                                <span>PRE-TRADE RISK TICKET</span>
+                            </div>
+                            <span class="badge-pill badge-pill-green" id="ticketRrBadge">2.1 R</span>
+                        </div>
+
+                        <div class="ui-card-body">
+                            <form id="orderTicketForm" onsubmit="event.preventDefault(); submitOrderTicket();">
+                                <div class="risk-form-grid" style="margin-bottom: 8px;">
+                                    <div class="risk-form-group">
+                                        <label class="risk-form-label">SYMBOL</label>
+                                        <input type="text" id="ticketSymbol" class="risk-form-input" value="NVDA" readonly>
+                                    </div>
+                                    <div class="risk-form-group">
+                                        <label class="risk-form-label">STRATEGY</label>
+                                        <select id="ticketStrategy" class="risk-form-input">
+                                            <option value="Gap-and-Go Pullback">Gap-and-Go Pullback</option>
+                                            <option value="Opening Range Breakout">Opening Range Breakout</option>
+                                            <option value="VWAP Reclaim">VWAP Reclaim</option>
+                                            <option value="Relative-Strength Options">Options Rel-Strength</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 8px;">
+                                    <div class="risk-form-group">
+                                        <label class="risk-form-label">ENTRY PRICE</label>
+                                        <input type="number" step="0.01" id="ticketEntry" class="risk-form-input" value="217.14" oninput="calculateTicketMetrics()">
+                                    </div>
+                                    <div class="risk-form-group">
+                                        <label class="risk-form-label">STOP PRICE</label>
+                                        <input type="number" step="0.01" id="ticketStop" class="risk-form-input" value="216.66" oninput="calculateTicketMetrics()">
+                                    </div>
+                                    <div class="risk-form-group">
+                                        <label class="risk-form-label">TARGET (2R+)</label>
+                                        <input type="number" step="0.01" id="ticketTarget" class="risk-form-input" value="218.10" oninput="calculateTicketMetrics()">
+                                    </div>
+                                </div>
+
+                                <div class="risk-form-group" style="margin-bottom: 8px;">
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <label class="risk-form-label">POSITION SIZING (SHARES)</label>
+                                        <span style="font-size: 9.5px; color: var(--text-muted);">Based on 1% risk tier</span>
+                                    </div>
+                                    <input type="number" id="ticketShares" class="risk-form-input" value="1353" oninput="calculateTicketMetrics()">
+                                </div>
+
+                                <!-- Risk / Reward Estimates -->
+                                <div class="risk-estimates-row">
+                                    <span>EST. RISK: <strong class="value-red" id="ticketEstRisk">$648.24</strong></span>
+                                    <span>EST. REWARD: <strong class="value-green" id="ticketEstReward">$1,301.88</strong></span>
+                                </div>
+
+                                <!-- Override Box if R:R < 2.0 -->
+                                <div id="overrideReasonBox" style="display: none; margin-bottom: 8px;">
+                                    <label class="risk-form-label" style="color: #D97706;">AUDIT OVERRIDE REASON (R:R &lt; 2.0)</label>
+                                    <input type="text" id="ticketOverrideReason" class="risk-form-input" placeholder="Setup justification required by Section 7...">
+                                </div>
+
+                                <button type="button" id="btnSubmitOrder" class="btn-place-trade" onclick="submitOrderTicket()">Review & Place Trade</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             MODULE VIEW 2: 5-PILLAR SCANNER FULL SCREEN
+             ========================================================================= -->
+        <div id="view-scanner" class="tab-view" style="display: none;">
+            <div class="full-module-container">
+                <div class="module-header-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h2>🎯 Section 3: Five-Pillar Quantitative Ingestion Engine</h2>
+                            <p>Real-time institutional universe screening for high-probability momentum setups.</p>
+                        </div>
+                        <span class="badge-pill badge-pill-cyan">SCANNER ACTIVE</span>
+                    </div>
+                </div>
+
+                <div class="ui-card">
+                    <div class="ui-card-body" style="padding: 0;">
+                        <table class="full-table">
+                            <thead>
+                                <tr>
+                                    <th>SYMBOL</th>
+                                    <th>COMPANY</th>
+                                    <th>PRICE</th>
+                                    <th>GAP %</th>
+                                    <th>RVOL</th>
+                                    <th>FLOAT</th>
+                                    <th>CATALYST TYPE</th>
+                                    <th>SPREAD QUALITY</th>
+                                    <th>AI SCORE</th>
+                                    <th>GRADE</th>
+                                    <th style="text-align: right;">ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fullScannerBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             MODULE VIEW 3: DISCIPLINE & RISK COCKPIT
+             ========================================================================= -->
+        <div id="view-risk" class="tab-view" style="display: none;">
+            <div class="full-module-container">
+                <div class="module-header-card">
+                    <h2>🛡️ Section 7: Discipline & Risk Controls Engine</h2>
+                    <p>Enforces small-account rules, daily drawdown locks, profit giveback limits, and override audits.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">Risk Tier Manager</span>
+                            <span class="badge-pill badge-pill-green">ACTIVE</span>
+                        </div>
+                        <div class="ui-card-body">
+                            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">
+                                Tier progression mandates demonstrated statistical consistency and capital growth before scaling risk limits.
+                            </p>
+                            <div class="risk-form-group" style="margin-bottom: 14px;">
+                                <label class="risk-form-label">ACTIVE RISK TIER</label>
+                                <select id="tierSelect" class="risk-form-input">
+                                    <option value="Tier 1" selected>Tier 1 ($30 - $50 micro-risk per trade)</option>
+                                    <option value="Tier 2">Tier 2 ($300 - $500 intermediate tier)</option>
+                                    <option value="Tier 3">Tier 3 ($3,000 - $5,000 advanced tier)</option>
+                                </select>
+                            </div>
+
+                            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px;">
+                                <h4 style="font-size: 11px; text-transform: uppercase; color: var(--text-title); margin-bottom: 8px;">Enforced Execution Rules</h4>
+                                <ul style="list-style: none; font-size: 11.5px; line-height: 1.8; color: var(--text-main);">
+                                    <li>🔒 <strong>Max Daily Loss Lockout:</strong> Hard freeze triggered upon hitting daily loss threshold.</li>
+                                    <li>🛑 <strong>50% Profit Giveback Shutdown:</strong> Automated shutdown after giving back 50% of peak gains.</li>
+                                    <li>⏰ <strong>10:00 a.m. EST Cutoff:</strong> Mutes entry signals past the optimal morning momentum window.</li>
+                                    <li>🚫 <strong>No Return Rule:</strong> Account lockout cannot be bypassed on the same trading day.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">Permanent Override Audit Log</span>
+                            <span class="badge-pill badge-pill-amber">AUDITED</span>
+                        </div>
+                        <div class="ui-card-body">
+                            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 10px;">
+                                Any trade staged with a Reward/Risk ratio &lt; 2.0:1 requires mandatory documented technical justification recorded to this immutable audit trail.
+                            </p>
+                            <div id="auditLogContainer" style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; max-height: 250px; overflow-y: auto; font-family: var(--font-mono); font-size: 11px;">
+                                <div style="color: var(--accent-green);">[AUDIT SYSTEM ENGAGED] All staging orders evaluated against 2:1 R:R gatekeeper.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             MODULE VIEW 4: TRADE JOURNAL & ANALYTICS
+             ========================================================================= -->
+        <div id="view-journal" class="tab-view" style="display: none;">
+            <div class="full-module-container">
+                <div class="kpi-row">
+                    <div class="kpi-card">
+                        <div class="kpi-left-box">
+                            <div class="kpi-icon-bubble">📋</div>
+                            <div>
+                                <div class="kpi-title">TOTAL TRADES</div>
+                                <div class="kpi-value value-blue" id="statTotalTrades">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-left-box">
+                            <div class="kpi-icon-bubble">🏆</div>
+                            <div>
+                                <div class="kpi-title">WIN RATE %</div>
+                                <div class="kpi-value value-green" id="statWinRate">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-left-box">
+                            <div class="kpi-icon-bubble">⚖️</div>
+                            <div>
+                                <div class="kpi-title">PROFIT FACTOR</div>
+                                <div class="kpi-value value-green" id="statProfitFactor">0.0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-left-box">
+                            <div class="kpi-icon-bubble">💵</div>
+                            <div>
+                                <div class="kpi-title">EXPECTANCY / TRADE</div>
+                                <div class="kpi-value value-blue" id="statExpectancy">$0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-left-box">
+                            <div class="kpi-icon-bubble">🎯</div>
+                            <div>
+                                <div class="kpi-title">RULE ADHERENCE</div>
+                                <div class="kpi-value value-green" id="statRuleAdherence">100%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-card">
+                    <div class="ui-card-header">
+                        <span class="ui-card-title">Section 6 & 9: Verified Trade Journal & AI Post-Trade Review</span>
+                    </div>
+                    <div class="ui-card-body" style="padding: 0;">
+                        <table class="full-table">
+                            <thead>
+                                <tr>
+                                    <th>ORDER ID</th>
+                                    <th>SYMBOL</th>
+                                    <th>STRATEGY</th>
+                                    <th>SHARES</th>
+                                    <th>FILL</th>
+                                    <th>STOP</th>
+                                    <th>TARGET</th>
+                                    <th>REALIZED P&L</th>
+                                    <th>R-MULTIPLE</th>
+                                    <th>MISTAKE TAG</th>
+                                    <th>AI COACHING CRITIQUE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="journalTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             MODULE VIEW 5: BACKTESTING LAB
+             ========================================================================= -->
+        <div id="view-backtest" class="tab-view" style="display: none;">
+            <div class="full-module-container">
+                <div class="module-header-card">
+                    <h2>🧪 Section 8: Backtesting Lab & Walk-Forward Validation</h2>
+                    <p>Simulate historical momentum performance with realistic friction (slippage & commissions).</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 310px 1fr; gap: 12px;">
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">Backtest Parameters</span>
+                        </div>
+                        <div class="ui-card-body">
+                            <div class="risk-form-group" style="margin-bottom: 10px;">
+                                <label class="risk-form-label">STRATEGY</label>
+                                <select id="btStrategy" class="risk-form-input">
+                                    <option value="Gap-and-Go Pullback">Gap-and-Go Pullback</option>
+                                    <option value="Opening Range Breakout">Opening Range Breakout</option>
+                                    <option value="VWAP Reclaim">VWAP Reclaim</option>
+                                </select>
+                            </div>
+                            <div class="risk-form-group" style="margin-bottom: 10px;">
+                                <label class="risk-form-label">LOOKBACK PERIOD (DAYS)</label>
+                                <input type="number" id="btDays" class="risk-form-input" value="30">
+                            </div>
+                            <div class="risk-form-group" style="margin-bottom: 10px;">
+                                <label class="risk-form-label">MAX PULLBACK DEPTH (0.50 = 50%)</label>
+                                <input type="number" step="0.05" id="btPullback" class="risk-form-input" value="0.50">
+                            </div>
+                            <div class="risk-form-group" style="margin-bottom: 14px;">
+                                <label class="risk-form-label">SLIPPAGE FRICTION ($ / SHARE)</label>
+                                <input type="number" step="0.01" id="btSlippage" class="risk-form-input" value="0.02">
+                            </div>
+                            <button onclick="runBacktestLab()" class="btn-place-trade">REPLAY HISTORICAL BACKTEST</button>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <div class="kpi-row" style="grid-template-columns: repeat(4, 1fr);">
+                            <div class="kpi-card">
+                                <div class="kpi-left-box">
+                                    <div>
+                                        <div class="kpi-title">TRADES REPLAYED</div>
+                                        <div class="kpi-value value-blue" id="btTradesCount">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-left-box">
+                                    <div>
+                                        <div class="kpi-title">WIN RATE %</div>
+                                        <div class="kpi-value value-green" id="btWinRate">0%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-left-box">
+                                    <div>
+                                        <div class="kpi-title">PROFIT FACTOR</div>
+                                        <div class="kpi-value value-green" id="btProfitFactor">0.0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="kpi-card">
+                                <div class="kpi-left-box">
+                                    <div>
+                                        <div class="kpi-title">NET PROFIT</div>
+                                        <div class="kpi-value value-green" id="btNetProfit">$0.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ui-card" style="height: 280px; padding: 12px;">
+                            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px;">EQUITY CURVE WALK-FORWARD PROJECTION</div>
+                            <canvas id="btChartCanvas" style="width: 100%; height: 230px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================================================================
+             MODULE VIEW 6: COMPLIANCE & 2026 FINRA
+             ========================================================================= -->
+        <div id="view-compliance" class="tab-view" style="display: none;">
+            <div class="full-module-container">
+                <div class="module-header-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <h2>⚖️ Section 10: Regulatory Compliance & FINRA 2026 Framework</h2>
+                            <p>Margin risk cushion, PDT regime monitoring, and SEC statutory disclosures.</p>
+                        </div>
+                        <span id="compStatusBadge" class="badge-pill badge-pill-green">COMPLIANT</span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title">FINRA 2026 Intraday Margin Framework</span>
+                        </div>
+                        <div class="ui-card-body">
+                            <p id="compNotice" style="font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px;"></p>
+                            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px; margin-bottom: 12px;">
+                                <div class="kpi-title">REGULATORY STANDARD</div>
+                                <div id="compFramework" style="font-size: 13px; font-weight: 800; color: var(--text-title); margin-top: 2px;"></div>
+                            </div>
+                            <div style="background: var(--bg-card-subtle); border: 1px solid var(--border-color); border-radius: 8px; padding: 12px;">
+                                <div class="kpi-title">ACCOUNT MARGIN CUSHION</div>
+                                <div id="compMarginCushion" class="kpi-value value-green" style="font-size: 16px; margin-top: 2px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ui-card">
+                        <div class="ui-card-header">
+                            <span class="ui-card-title" style="color: #D97706;">SEC Statutory Risk Warnings</span>
+                        </div>
+                        <div class="ui-card-body">
+                            <div style="background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 8px; padding: 14px; margin-bottom: 14px;">
+                                <p id="compDisclaimer" style="font-size: 11.5px; line-height: 1.7; color: #92400E;"></p>
+                            </div>
+                            <div style="font-size: 12px; color: var(--text-muted);">
+                                <strong>Active Safety Mitigations:</strong>
+                                <ul style="margin-top: 6px; padding-left: 18px; line-height: 1.8;">
+                                    <li>Hardware-grade Emergency Kill Switch flattens open positions immediately.</li>
+                                    <li>Automated latency health check (&le; 350ms) mutes signals during network stalls.</li>
+                                    <li>Strict 2:1 planned reward/risk gatekeeper prevents negative expectancy trades.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal: Settings -->
+    <div id="modalSettings" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>⚙️ QuantEdge System Settings</h3>
+                <button class="modal-close-btn" onclick="closeModal('settings')">✕</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Alpaca Paper API Endpoint:</strong> <code>https://paper-api.alpaca.markets/v2</code></p>
+                <p><strong>Market Data Stream:</strong> IEX Real-Time Stocks Feed (v2)</p>
+                <p><strong>Timezone Aligned:</strong> America/New_York (EST/EDT)</p>
+                <p style="margin-top: 12px;"><strong>Credentials:</strong> Loaded securely from <code>.env</code> file.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Help -->
+    <div id="modalHelp" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>❓ QuantEdge Help & Operator Shortcuts</h3>
+                <button class="modal-close-btn" onclick="closeModal('help')">✕</button>
+            </div>
+            <div class="modal-body">
+                <p><strong>5-Pillar Rule:</strong> Trade only stocks with RVOL &ge; 5x, gap &ge; 2%, float &le; 20M, price $2-$20.</p>
+                <p><strong>Trading Window:</strong> High-probability entries occur strictly between 09:30 and 10:00 AM EST.</p>
+                <p><strong>Emergency:</strong> Hit the red <em>EMERGENCY KILL SWITCH</em> in the top header to flatten all positions.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Documentation -->
+    <div id="modalDocs" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>📖 Strategy Documentation</h3>
+                <button class="modal-close-btn" onclick="closeModal('docs')">✕</button>
+            </div>
+            <div class="modal-body">
+                <p>QuantEdge implements the institutional momentum specifications defined in the Strategic Requirements Document.</p>
+                <p style="margin-top: 8px;">Key rules: 50% Profit Giveback Shutdown, $100 Daily Loss Lockout, and 2:1 Minimum Planned Reward/Risk.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+﻿[DIR]  .vscode/
+          settings.json
+[DIR]  Data/
+  [DIR]  backtests/
+    [DIR]  ITC/
+              summary.json
+    [DIR]  itc_trend_momentum/
+              summary.json
+  [DIR]  processed/
+    [DIR]  stocks/
+  [DIR]  raw/
+    [DIR]  stocks/
+  [DIR]  reports/
+    [DIR]  stocks/
+              ITC_data_quality.json
+            itc_data_quality.json
+  [DIR]  validation/
+            ITC_sensitivity.json
+            ITC_splits.json
+            ITC_summary.json
+            ITC_walkforward.json
+[DIR]  docs/
+[DIR]  frontend/
+  [DIR]  public/
+  [DIR]  src/
+    [DIR]  __tests__/
+              AssistantPanel.test.tsx
+              MetricCard.test.tsx
+              Overview.test.tsx
+              setup.ts
+              StockSelector.test.tsx
+              TradeTable.test.tsx
+    [DIR]  assets/
+    [DIR]  components/
+      [DIR]  charts/
+      [DIR]  layout/
+      [DIR]  metrics/
+      [DIR]  ui/
+    [DIR]  pages/
+      [DIR]  BacktestLab/
+      [DIR]  DataCenter/
+      [DIR]  Overview/
+      [DIR]  StockAnalysis/
+      [DIR]  TradeJournal/
+    [DIR]  services/
+              api.ts
+    [DIR]  types/
+              index.ts
+            App.tsx
+            index.css
+            main.tsx
+            vite-env.d.ts
+          .oxlintrc.json
+          index.html
+          package.json
+          package-lock.json
+          tsconfig.app.json
+          tsconfig.json
+          tsconfig.node.json
+          tsconfig.test.json
+          vite.config.ts
+[DIR]  model/
+          __init__.py
+          kronos.py
+          module.py
+[DIR]  notebook/
+[DIR]  quant/
+  [DIR]  api/
+    [DIR]  routes/
+              __init__.py
+              assistant.py
+              backtests.py
+              data_quality.py
+              overview.py
+              stocks.py
+            __init__.py
+            context_builder.py
+            llm_provider.py
+            main.py
+            schemas.py
+  [DIR]  backtest/
+            __init__.py
+            __main__.py
+            costs.py
+            engine.py
+            metrics.py
+            pipeline.py
+  [DIR]  data/
+    [DIR]  sources/
+              __init__.py
+              base.py
+              csv_source.py
+            __init__.py
+            cleaning.py
+            ingestion.py
+            pipeline.py
+            registry.py
+            validation.py
+  [DIR]  features/
+            __init__.py
+            indicators.py
+            pipeline.py
+  [DIR]  strategies/
+            __init__.py
+            trend_momentum.py
+  [DIR]  validation/
+            __init__.py
+            __main__.py
+            benchmark.py
+            gates.py
+            report.py
+            sensitivity.py
+            splitter.py
+            walk_forward.py
+          __init__.py
+[DIR]  tests/
+          __init__.py
+          test_assistant.py
+          test_backtest.py
+          test_cleaning.py
+          test_context_builder.py
+          test_indicators.py
+          test_ingestion.py
+          test_llm_provider.py
+          test_multistock.py
+          test_registry.py
+          test_sources.py
+          test_strategy.py
+          test_validation.py
+          test_walk_forward.py
+        requirements.txt
